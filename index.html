@@ -4,25 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#6056d8" />
-    <title>Ma Famille Fkaier · Connexion</title>
+    <title>Ma Famille Fkaier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Écran de sélection des profils -->
     <div id="authScreen" class="auth-screen">
       <div class="auth-card">
         <h1>✦ Ma Famille Fkaier</h1>
         <p>Qui se connecte aujourd'hui ?</p>
         <div class="profile-selectors">
-          <button class="profile-btn amber" onclick="login('Choko')"><span class="avatar amber">C</span> Choko</button>
-          <button class="profile-btn lavender" onclick="login('Ahlem')"><span class="avatar lavender">A</span> Ahlem</button>
-          <button class="profile-btn coral" onclick="login('Mariem')"><span class="avatar coral">M</span> Mariem</button>
+          <button class="profile-btn" onclick="login('Choko')">
+            <span class="avatar amber">C</span> Choko
+          </button>
+          <button class="profile-btn" onclick="login('Ahlem')">
+            <span class="avatar lavender">A</span> Ahlem
+          </button>
+          <button class="profile-btn" onclick="login('Mariem')">
+            <span class="avatar coral">M</span> Mariem
+          </button>
         </div>
       </div>
     </div>
 
+    <!-- Application principale -->
     <div class="app-shell" id="appShell" style="display:none;">
       <aside class="sidebar">
         <a class="brand" href="#home" aria-label="Ma Famille Fkaier">✦ <span id="brandName">Famille Fkaier</span></a>
@@ -32,10 +40,11 @@
           <small id="currentUserBadge">Connecté</small>
         </div>
         <button class="language-toggle" id="languageToggle" aria-label="Changer la langue">عربي</button>
-        <button class="language-toggle" style="margin-top:5px; background:#fee2e2; color:#b91c1c; border-color:#fca5a5;" onclick="logout()">Changer de profil</button>
+        <button class="language-toggle logout-btn" onclick="logout()">Changer de profil</button>
       </aside>
       <main id="app" tabindex="-1"></main>
     </div>
+
     <div id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>
   </body>
