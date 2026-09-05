@@ -1,6 +1,7 @@
 const key='maFamilleFkaierData';
 const defaults={
   lang:'fr',
+  currentUser:null,
   tasks:[{id:1,text:'Préparer le cartable de Mariem',owner:'Mariem',done:false},{id:2,text:'Vérifier la voiture',owner:'Choko',done:false},{id:3,text:'Préparer les courses',owner:'Ahlem',done:true}],
   messages:[{from:'Ahlem',text:'Bienvenue dans notre espace famille !',time:'09:12'},{from:'Choko',text:'N’oubliez pas le goûter de Mariem 😊',time:'09:20'}],
   photos:[],
@@ -10,6 +11,7 @@ const defaults={
   recipes:[{id:1,title:'Couscous du vendredi 🍲',note:'Demander à Ahlem la recette secrète !'},{id:2,title:'Gâteau au chocolat 🍫',note:'Pour le goûter de Mariem ce week-end.'}],
   kidsTasks:[{id:1,text:'Ranger les jouets de la chambre',done:false},{id:2,text:'Lire une histoire ce soir',done:false},{id:3,text:'Dire "je t’aime" à Papa et Maman',done:true}]
 };
+
 let data=JSON.parse(localStorage.getItem(key)||'null')||defaults; 
 const save=()=>localStorage.setItem(key,JSON.stringify(data));
 
@@ -17,7 +19,7 @@ const t={
   fr:{
     brand:'Famille Fkaier',familyOnline:'Famille connectée',
     nav:{home:'Accueil',tasks:'Tâches',school:'École',shop:'Shopping & Cuisine',kids:'Coin de Mariem',location:'Localisation',chat:'Discussion',photos:'Souvenirs'},
-    hello:'Bonjour, Choko, Ahlem & Mariem !',today:'Dimanche 6 septembre',welcome:'Bienvenue dans Ma Famille Fkaier.',
+    hello:'Bonjour',today:'Dimanche 6 septembre',welcome:'Bienvenue dans Ma Famille Fkaier.',
     tasks:'Tâches du jour',addTask:'Ajouter une tâche',taskPlaceholder:'Nouvelle tâche…',
     school:'L’école de Mariem',schedule:'Emploi du temps',upcoming:'À venir',
     shopTitle:'Shopping & Cuisine d’Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idées de repas & Recettes',addRecipe:'Ajouter une idée',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingrédients...',
@@ -30,7 +32,7 @@ const t={
   ar:{
     brand:'عائلة فقيّر',familyOnline:'العائلة متصلة',
     nav:{home:'الرئيسية',tasks:'المهام',school:'المدرسة',shop:'التسوق والمطبخ',kids:'عالم مريم',location:'الموقع',chat:'المحادثة',photos:'الذكريات'},
-    hello:'مرحباً عائلة فقيّر!',today:'الأحد 6 سبتمبر',welcome:'مرحباً بكم في تطبيق عائلة فقيّر.',
+    hello:'مرحباً',today:'الأحد 6 سبتمبر',welcome:'مرحباً بكم في تطبيق عائلة فقيّر.',
     tasks:'مهام اليوم',addTask:'إضافة مهمة',taskPlaceholder:'مهمة جديدة…',
     school:'مدرسة مريم',schedule:'الجدول الأسبوعي',upcoming:'القادم',
     shopTitle:'مطبخ وتسوق أحلام 🛒',shoppingList:'قائمة التسوق',addShop:'إضافة غرض',shopPlaceholder:'مثال: خبز، حليب...',recipes:'أفكار الوصفات والطبخ',addRecipe:'إضافة فكرة طبق',recipeTitle:'اسم الوجبة...',recipeNote:'ملاحظات أو مكونات...',
@@ -45,19 +47,34 @@ const t={
 const icons={home:'⌂',tasks:'✓',school:'✎',shop:'🛒',kids:'⭐',location:'⌖',chat:'◌',photos:'▧'}; 
 const q=()=>t[data.lang];
 
+function login(name){
+  data.currentUser=name;
+  save();
+  render();
+}
+
+function logout(){
+  data.currentUser=null;
+  save();
+  render();
+}
+
 function toast(msg){const e=document.querySelector('#toast');e.textContent=msg;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500)}
+
 function nav(){
   let page=location.hash.slice(1)||'home',s=q();
   document.querySelector('#navigation').innerHTML=Object.entries(s.nav).map(([id,label])=>`<button class="nav-link ${id===page?'active':''}" data-icon="${icons[id]}" onclick="go('${id}')">${icons[id]} ${label}</button>`).join('');
-  document.querySelector('.brand span').textContent=s.brand;
-  document.querySelector('[data-i18n="familyOnline"]').textContent=s.familyOnline;
+  document.querySelector('#brandName').textContent=s.brand;
+  document.querySelector('#currentUserBadge').textContent=`${data.currentUser}`;
   document.querySelector('#languageToggle').textContent=data.lang==='fr'?'عربي':'Français';
 }
+
 function header(title,sub,action=''){return `<header class="page-header"><div><p class="eyebrow">Ma Famille Fkaier</p><h1 class="page-title">${title}</h1>${sub?`<p class="page-subtitle">${sub}</p>`:''}</div>${action}</header>`}
 
 function home(){
   let s=q(),remaining=data.tasks.filter(x=>!x.done).length;
-  return header(s.hello,s.today)+`<section class="dashboard"><div>
+  let greeting=`${s.hello}, ${data.currentUser} !`;
+  return header(greeting,s.today)+`<section class="dashboard"><div>
     <article class="card today"><div class="today-icon">🏡</div><div><h2>${s.welcome}</h2><p class="muted">${s.tasks} · ${remaining} ${data.lang==='fr'?'à faire':'متبقية'}</p></div></article>
     <div class="stat-grid"><div class="stat"><strong>${remaining}</strong><span>${s.tasks}</span></div><div class="stat"><strong>🛒</strong><span>Shopping</span></div><div class="stat"><strong>${data.mood}</strong><span>${s.mood}</span></div></div>
     <article class="card" style="margin-top:22px"><div class="card-heading"><h2>${s.tasks}</h2><button class="button secondary" onclick="go('tasks')">${s.addTask}</button></div>${taskList(data.tasks.slice(0,3))}</article>
@@ -138,7 +155,7 @@ function locationPage(){
 
 function chat(){
   let s=q();
-  return header(s.chat,`${t.fr.familyOnline} · 3 ${s.online}`)+`<article class="card chat"><div class="messages">${data.messages.map(m=>`<div class="message ${m.from==='Choko'?'me':''}"><b>${m.from}</b><br>${m.text}<small>${m.time}</small></div>`).join('')}</div><form class="chat-form" onsubmit="sendMessage(event)"><input id="messageInput" placeholder="${s.message}" required><button class="button">${s.send}</button></form></article>`;
+  return header(s.chat,`${t.fr.familyOnline} · 3 ${s.online}`)+`<article class="card chat"><div class="messages">${data.messages.map(m=>`<div class="message ${m.from===data.currentUser?'me':''}"><b>${m.from}</b><br>${m.text}<small>${m.time}</small></div>`).join('')}</div><form class="chat-form" onsubmit="sendMessage(event)"><input id="messageInput" placeholder="${s.message}" required><button class="button">${s.send}</button></form></article>`;
 }
 
 function photos(){
@@ -147,6 +164,18 @@ function photos(){
 }
 
 function render(){
+  const authScreen = document.querySelector('#authScreen');
+  const appShell = document.querySelector('#appShell');
+
+  if(!data.currentUser){
+    authScreen.style.display = 'flex';
+    appShell.style.display = 'none';
+    return;
+  }
+
+  authScreen.style.display = 'none';
+  appShell.style.display = 'grid';
+
   document.documentElement.lang=data.lang;
   document.documentElement.dir=data.lang==='ar'?'rtl':'ltr';
   document.body.classList.toggle('rtl',data.lang==='ar');
@@ -164,7 +193,7 @@ function toggleShop(id){let item=data.shopping.find(x=>x.id===id);item.done=!ite
 function addRecipe(e){e.preventDefault();data.recipes.unshift({id:Date.now(),title:recTitle.value,note:recNote.value});save();render()}
 function toggleKidsTask(id){let item=data.kidsTasks.find(x=>x.id===id);item.done=!item.done;save();render()}
 function setMood(m){data.mood=m;save();toast(q().moodSaved);render()} 
-function sendMessage(e){e.preventDefault();data.messages.push({from:'Choko',text:messageInput.value,time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});save();render()} 
+function sendMessage(e){e.preventDefault();data.messages.push({from:data.currentUser,text:messageInput.value,time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});save();render()} 
 function addPhoto(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{data.photos.unshift(r.result);save();render()};r.readAsDataURL(f)} 
 function getLocation(){if(!navigator.geolocation){toast('Geolocation indisponible');return}navigator.geolocation.getCurrentPosition(p=>{data.location=`${p.coords.latitude.toFixed(3)}, ${p.coords.longitude.toFixed(3)}`;save();toast(q().locationSaved);render()},()=>toast('Autorisation de localisation requise'))}
 
