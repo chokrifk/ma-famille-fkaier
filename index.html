@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#6056d8" />
+    <title>Ma Famille Fkaier · Famille connectée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#home" aria-label="Ma Famille Fkaier">✦ <span>Famille Fkaier</span></a>
+        <nav id="navigation" aria-label="Navigation principale"></nav>
+        <div class="family-mini"><span class="avatar amber">C</span><span class="avatar lavender">A</span><span class="avatar coral">M</span><small data-i18n="familyOnline">Famille connectée</small></div>
+        <button class="language-toggle" id="languageToggle" aria-label="Changer la langue">عربي</button>
+      </aside>
+      <main id="app" tabindex="-1"></main>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
