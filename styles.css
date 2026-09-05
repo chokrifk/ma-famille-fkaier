@@ -114,3 +114,10 @@ main { padding: 30px; overflow-y: auto; display: flex; flex-direction: column; g
   .sidebar { display: none; }
   .dashboard, .two-col { grid-template-columns: 1fr; }
 }
+.auth-screen { position: fixed; inset: 0; background: linear-gradient(135deg, #6056d8, #3b31b8); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+.auth-card { background: white; padding: 40px; border-radius: 20px; text-align: center; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+.auth-card h1 { font-size: 22px; color: var(--primary); margin-bottom: 8px; }
+.auth-card p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.profile-selectors { display: flex; flex-direction: column; gap: 12px; }
+.profile-btn { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--line); background: #fafbff; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; text-align: left; }
+.profile-btn:hover { background: var(--primary-light); border-color: var(--primary); transform: translateY(-2px); }
