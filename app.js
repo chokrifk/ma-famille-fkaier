@@ -9,7 +9,7 @@ const defaults={
   location:null,
   shopping:[{id:1,text:'Lait & Fromage',done:false},{id:2,text:'Café et biscuits pour Mariem',done:false},{id:3,text:'Légumes frais',done:true}],
   recipes:[{id:1,title:'Couscous du vendredi 🍲',note:'Demander à Ahlem la recette secrète !'},{id:2,title:'Gâteau au chocolat 🍫',note:'Pour le goûter de Mariem ce week-end.'}],
-  kidsTasks:[{id:1,text:'Ranger les jouets de la chambre',done:false},{id:2,text:'Lire une histoire ce soir',done:false},{id:3,text:'Dire "je t’aime" à Papa et Maman',done:true}]
+  kidsTasks:[{id:1,text:'Ranger les jouets de la chambre',done:false},{id:2,text:'Lire une histoire ce soir',done:false},{id:3,text:'Dire je t aime à Papa et Maman',done:true}]
 };
 
 let data=JSON.parse(localStorage.getItem(key)||'null')||defaults; 
