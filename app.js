@@ -29,7 +29,7 @@ const t={
     tasks:'Taches du travail & perso',addTask:'Ajouter une tache',taskPlaceholder:'Nouvelle tache…',
     school:'L ecole de Mariem',schedule:'Emploi du temps modifiable',upcoming:'A venir',addEvent:'Ajouter un cours/evenement',
     shopTitle:'Shopping & Cuisine d Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idees de repas & Recettes',addRecipe:'Ajouter une idee',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingredients...',
-    kidsTitle:'Le coin magique de Mariem ✨',drawingBoard:'Mon ardoise magique 🎨',clearCanvas:'Effacer',saveDrawing:'Sauver le dessin',kidsChallenges:'Mes defis du jour 🌟',
+    kidsTitle:'Le coin magique de Mariem ✨',drawingBoard:'Mon ardoise magique 🎨',clearCanvas:'Effacer',saveDrawing:'Sauver le dessin',kidsChallenges:'Mes defis du jour 🌟',addChallenge:'Ajouter un defi',challengePlaceholder:'Nouveau defi de Mariem…',
     location:'Ou est la famille ?',locText:'Partagez votre position uniquement quand vous le souhaitez.',updateLocation:'Mettre a jour ma position',locationSaved:'Position enregistree sur cet appareil',
     chat:'Discussion familiale',message:'Ecrire un message…',send:'Envoyer',
     photos:'Nos souvenirs',addPhoto:'Ajouter une photo',mood:'Comment ca va ?',moodSaved:'Humeur enregistree',noPhotos:'Ajoutez le premier souvenir de la famille.',online:'en ligne'
@@ -41,7 +41,7 @@ const t={
     tasks:'مهام العمل والشخصية',addTask:'إضافة مهمة',taskPlaceholder:'مهمة جديدة…',
     school:'مدرسة مريم',schedule:'الجدول المدرسي القابل للتعديل',upcoming:'القادم',addEvent:'إضافة حصة أو اختبار',
     shopTitle:'مطبخ وتسوق أحلام 🛒',shoppingList:'قائمة التسوق',addShop:'إضافة غرض',shopPlaceholder:'مثال: خبز، حليب...',recipes:'أفكار الوصفات والطبخ',addRecipe:'إضافة فكرة طبق',recipeTitle:'اسم الوجبة...',recipeNote:'ملاحظات أو مكونات...',
-    kidsTitle:'العالم السحري لمريم ✨',drawingBoard:'لوحة الرسم السحرية 🎨',clearCanvas:'مسح اللوحة',saveDrawing:'حفظ الرسم',kidsChallenges:'تحدياتي اليومية 🌟',
+    kidsTitle:'العالم السحري لمريم ✨',drawingBoard:'لوحة الرسم السحرية 🎨',clearCanvas:'مسح اللوحة',saveDrawing:'حفظ الرسم',kidsChallenges:'تحدياتي اليومية 🌟',addChallenge:'إضافة تحدي جديد',challengePlaceholder:'تحدي جديد لمريم…',
     location:'أين العائلة؟',locText:'شاركي موقعك فقط عندما ترغبين.',updateLocation:'تحديث موقعي',locationSaved:'تم حفظ موقعك على هذا الجهاز',
     chat:'محادثة العائلة',message:'اكتبي رسالة…',send:'إرسال',
     photos:'ذكرياتنا',addPhoto:'إضافة صورة',mood:'كيف حالك؟',moodSaved:'تم حفظ المزاج',noPhotos:'أضيفوا أول ذكرى للعائلة.',online:'متصل'
@@ -79,7 +79,6 @@ function home(){
   let s=q(), remaining=data.tasks.filter(x=>!x.done).length;
   let greeting=`${s.hello}, ${data.currentUser} !`;
 
-  // Profil spécifique : Mise en avant selon l'utilisateur connecte
   let profileSpecificHTML = '';
   if(data.currentUser==='Ahlem'){
     profileSpecificHTML = `<article class="card" style="margin-top:22px;border-left:4px solid var(--accent)"><h2>🛒 ${s.shopTitle}</h2><p class="muted">Accès rapide a votre espace cuisine et courses.</p><button class="button" style="margin-top:10px" onclick="go('shop')">Ouvrir le shopping</button></article>`;
@@ -111,7 +110,6 @@ function tasks(){
 
 function school(){
   let s=q();
-  let daysMap={Lun:'Lun',Mar:'Mar',Mer:'Mer',Jeu:'Jeu',Ven:'Ven',Sam:'Sam',Dim:'Dim'};
   return header(s.school,'Emploi du temps de Mariem · Modifiable par les parents')+
   `<div class="two-col">
     <article class="card">
@@ -187,15 +185,27 @@ function kids(){
         <button onclick="setPenColor('#ff595e')" style="background:#ff595e;width:25px;height:25px;border-radius:50%;border:none;cursor:pointer"></button>
         <button onclick="setPenColor('#ffca3a')" style="background:#ffca3a;width:25px;height:25px;border-radius:50%;border:none;cursor:pointer"></button>
         <button onclick="setPenColor('#8ac926')" style="background:#8ac926;width:25px;height:25px;border-radius:50%;border:none;cursor:pointer"></button>
+        <button onclick="setPenColor('#1982c4')" style="background:#1982c4;width:25px;height:25px;border-radius:50%;border:none;cursor:pointer"></button>
         <button class="button secondary" style="padding:3px 10px;font-size:12px;margin-left:auto" onclick="clearCanvas()">${s.clearCanvas}</button>
       </div>
       <canvas id="paintCanvas" width="400" height="280" style="width:100%;background:#fff;border:2px dashed var(--line);border-radius:12px;cursor:crosshair"></canvas>
     </article>
     <article class="card">
       <h2>${s.kidsChallenges}</h2>
+      <form class="task-form" onsubmit="addKidsTask(event)" style="grid-template-columns:1fr auto;margin-bottom:14px">
+        <input class="form-input" id="newKidsTask" placeholder="${s.challengePlaceholder}" required>
+        <button class="button">＋</button>
+      </form>
       <div class="check-list">${data.kidsTasks.map(k=>`<div class="task-row ${k.done?'done':''}"><input type="checkbox" ${k.done?'checked':''} onchange="toggleKidsTask(${k.id})"><label>${k.text}</label></div>`).join('')}</div>
     </article>
   </div>`;
+}
+
+function addKidsTask(e){
+  e.preventDefault();
+  data.kidsTasks.unshift({id:Date.now(),text:newKidsTask.value,done:false});
+  save();
+  render();
 }
 
 function locationPage(){
@@ -210,7 +220,7 @@ function chat(){
 
 function photos(){
   let s=q();
-  return header(s.photos,'',`<label class="button" for="photoInput">＋ ${s.addPhoto}</label><input hidden id="photoInput" type="file" accept="image/*" onchange="addPhoto(event)">`)+`<section class="gallery"><label class="photo upload" for="photoInput">＋<small>${s.addPhoto}</small></label>${data.photos.map(x=>`<div class="photo"><img src="${x}" alt="Souvenir"></div>`).join('')}</section>`;
+  return header(s.photos,'',`<label class="button" for="photoInput">＋ ${s.addPhoto}</label><input hidden id="photoInput" type="file" accept="image/*" onchange="addPhoto(event)">`)+`<section class="gallery"><label class="photo upload" for="photoInput">＋<small>${s.addPhoto}</small></label>${data.photos.px(x=>`<div class="photo"><img src="${x}" alt="Souvenir"></div>`).join('')}</section>`;
 }
 
 function render(){
