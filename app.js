@@ -3,7 +3,7 @@ const defaults={
   lang:'fr',
   currentUser:null,
   tasks:[{id:1,text:'Préparer le cartable de Mariem',owner:'Mariem',done:false},{id:2,text:'Vérifier la voiture',owner:'Choko',done:false},{id:3,text:'Préparer les courses',owner:'Ahlem',done:true}],
-  messages:[{from:'Ahlem',text:'Bienvenue dans notre espace famille !',time:'09:12'},{from:'Choko',text:'N’oubliez pas le goûter de Mariem 😊',time:'09:20'}],
+  messages:[{from:'Ahlem',text:'Bienvenue dans notre espace famille !',time:'09:12'},{from:'Choko',text:'N oubliez pas le goûter de Mariem 😊',time:'09:20'}],
   photos:[],
   mood:'😊',
   location:null,
@@ -17,13 +17,13 @@ const save=()=>localStorage.setItem(key,JSON.stringify(data));
 
 const t={
   fr:{
-    brand:'Famille Fkaier',familyOnline:'Famille connectée',
-    nav:{home:'Accueil',tasks:'Tâches',school:'École',shop:'Shopping & Cuisine',kids:'Coin de Mariem',location:'Localisation',chat:'Discussion',photos:'Souvenirs'},
+    brand:'Famille Fkaier',familyOnline:'Famille connectee',
+    nav:{home:'Accueil',tasks:'Tâches',school:'Ecole',shop:'Shopping & Cuisine',kids:'Coin de Mariem',location:'Localisation',chat:'Discussion',photos:'Souvenirs'},
     hello:'Bonjour',today:'Dimanche 6 septembre',welcome:'Bienvenue dans Ma Famille Fkaier.',
     tasks:'Tâches du jour',addTask:'Ajouter une tâche',taskPlaceholder:'Nouvelle tâche…',
-    school:'L’école de Mariem',schedule:'Emploi du temps',upcoming:'À venir',
-    shopTitle:'Shopping & Cuisine d’Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idées de repas & Recettes',addRecipe:'Ajouter une idée',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingrédients...',
-    kidsTitle:'Le coin magique de Mariem ✨',drawingBoard:'Mon ardoise magique 🎨',clearCanvas:'Effacer',saveDrawing:'Sauver le dessin',kidsChallenges:'Mes défis du jour 🌟',
+    school:'L ecole de Mariem',schedule:'Emploi du temps',upcoming:'A venir',
+    shopTitle:'Shopping & Cuisine d Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idées de repas & Recettes',addRecipe:'Ajouter une idée',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingrédients...',
+    kidsTitle:'Le coin magique de Mariem ✨',drawingBoard:'Mon ardoise magique 🎨',clearCanvas:'Effacer',saveDrawing:'Sauver le dessin',kidsChallenges:'Mes defis du jour 🌟',
     location:'Où est la famille ?',locText:'Partagez votre position uniquement quand vous le souhaitez.',updateLocation:'Mettre à jour ma position',locationSaved:'Position enregistrée sur cet appareil',
     chat:'Discussion familiale',message:'Écrire un message…',send:'Envoyer',
     photos:'Nos souvenirs',addPhoto:'Ajouter une photo',mood:'Comment ça va ?',moodSaved:'Humeur enregistrée',noPhotos:'Ajoutez le premier souvenir de la famille.',online:'en ligne',
@@ -141,9 +141,9 @@ function kids(){
     </article>
     <article class="card">
       <h2>${s.kidsChallenges}</h2>
-      <p class="muted" style="margin-bottom:14px">Coche tes défis une fois réussis aujourd'hui ! 🌟</p>
+      <p class="muted" style="margin-bottom:14px">Coche tes defis une fois reussis ! 🌟</p>
       <div class="check-list">${data.kidsTasks.map(k=>`<div class="task-row ${k.done?'done':''}"><input type="checkbox" ${k.done?'checked':''} onchange="toggleKidsTask(${k.id})"><label>${k.text}</label></div>`).join('')}</div>
-      ${data.kidsTasks.every(k=>k.done)?'<div style="text-align:center;margin-top:20px;font-size:18px;background:var(--mint);padding:12px;border-radius:12px;color:#236b43">🎉 Bravo Mariem ! Tu as gagné une super surprise aujourd'hui ! 👑</div>':''}
+      ${data.kidsTasks.every(k=>k.done)?'<div style="text-align:center;margin-top:20px;font-size:18px;background:var(--mint);padding:12px;border-radius:12px;color:#236b43">🎉 Bravo Mariem ! Tu as gagné une super surprise ! 👑</div>':''}
     </article>
   </div>`;
 }
