@@ -2,14 +2,14 @@ const key='maFamilleFkaierData';
 const defaults={
   lang:'fr',
   currentUser:null,
-  tasks:[{id:1,text:'Préparer le cartable de Mariem',owner:'Mariem',done:false},{id:2,text:'Vérifier la voiture',owner:'Choko',done:false},{id:3,text:'Préparer les courses',owner:'Ahlem',done:true}],
-  messages:[{from:'Ahlem',text:'Bienvenue dans notre espace famille !',time:'09:12'},{from:'Choko',text:'N oubliez pas le goûter de Mariem 😊',time:'09:20'}],
+  tasks:[{id:1,text:'Preparer le cartable de Mariem',owner:'Mariem',done:false},{id:2,text:'Verifier la voiture',owner:'Choko',done:false},{id:3,text:'Preparer les courses',owner:'Ahlem',done:true}],
+  messages:[{from:'Ahlem',text:'Bienvenue dans notre espace famille !',time:'09:12'},{from:'Choko',text:'N oubliez pas le gouter de Mariem 😊',time:'09:20'}],
   photos:[],
   mood:'😊',
   location:null,
-  shopping:[{id:1,text:'Lait & Fromage',done:false},{id:2,text:'Café et biscuits pour Mariem',done:false},{id:3,text:'Légumes frais',done:true}],
-  recipes:[{id:1,title:'Couscous du vendredi 🍲',note:'Demander à Ahlem la recette secrète !'},{id:2,title:'Gâteau au chocolat 🍫',note:'Pour le goûter de Mariem ce week-end.'}],
-  kidsTasks:[{id:1,text:'Ranger les jouets de la chambre',done:false},{id:2,text:'Lire une histoire ce soir',done:false},{id:3,text:'Dire je t aime à Papa et Maman',done:true}]
+  shopping:[{id:1,text:'Lait & Fromage',done:false},{id:2,text:'Cafe et biscuits pour Mariem',done:false},{id:3,text:'Legumes frais',done:true}],
+  recipes:[{id:1,title:'Couscous du vendredi 🍲',note:'Demander a Ahlem la recette secrete !'},{id:2,title:'Gateau au chocolat 🍫',note:'Pour le gouter de Mariem ce week-end.'}],
+  kidsTasks:[{id:1,text:'Ranger les jouets de la chambre',done:false},{id:2,text:'Lire une histoire ce soir',done:false},{id:3,text:'Dire je t aime a Papa et Maman',done:true}]
 };
 
 let data=JSON.parse(localStorage.getItem(key)||'null')||defaults; 
@@ -18,16 +18,16 @@ const save=()=>localStorage.setItem(key,JSON.stringify(data));
 const t={
   fr:{
     brand:'Famille Fkaier',familyOnline:'Famille connectee',
-    nav:{home:'Accueil',tasks:'Tâches',school:'Ecole',shop:'Shopping & Cuisine',kids:'Coin de Mariem',location:'Localisation',chat:'Discussion',photos:'Souvenirs'},
+    nav:{home:'Accueil',tasks:'Taches',school:'Ecole',shop:'Shopping & Cuisine',kids:'Coin de Mariem',location:'Localisation',chat:'Discussion',photos:'Souvenirs'},
     hello:'Bonjour',today:'Dimanche 6 septembre',welcome:'Bienvenue dans Ma Famille Fkaier.',
-    tasks:'Tâches du jour',addTask:'Ajouter une tâche',taskPlaceholder:'Nouvelle tâche…',
+    tasks:'Taches du jour',addTask:'Ajouter une tache',taskPlaceholder:'Nouvelle tache…',
     school:'L ecole de Mariem',schedule:'Emploi du temps',upcoming:'A venir',
-    shopTitle:'Shopping & Cuisine d Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idées de repas & Recettes',addRecipe:'Ajouter une idée',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingrédients...',
+    shopTitle:'Shopping & Cuisine d Ahlem',shoppingList:'Liste de courses',addShop:'Ajouter un article',shopPlaceholder:'Ex: Pain, tomates...',recipes:'Idees de repas & Recettes',addRecipe:'Ajouter une idee',recipeTitle:'Nom de la recette / plat',recipeNote:'Notes / Ingredients...',
     kidsTitle:'Le coin magique de Mariem ✨',drawingBoard:'Mon ardoise magique 🎨',clearCanvas:'Effacer',saveDrawing:'Sauver le dessin',kidsChallenges:'Mes defis du jour 🌟',
-    location:'Où est la famille ?',locText:'Partagez votre position uniquement quand vous le souhaitez.',updateLocation:'Mettre à jour ma position',locationSaved:'Position enregistrée sur cet appareil',
-    chat:'Discussion familiale',message:'Écrire un message…',send:'Envoyer',
-    photos:'Nos souvenirs',addPhoto:'Ajouter une photo',mood:'Comment ça va ?',moodSaved:'Humeur enregistrée',noPhotos:'Ajoutez le premier souvenir de la famille.',online:'en ligne',
-    events:['Cours de maths','Devoir français','Examen sciences','Natation']
+    location:'Ou est la famille ?',locText:'Partagez votre position uniquement quand vous le souhaitez.',updateLocation:'Mettre a jour ma position',locationSaved:'Position enregistree sur cet appareil',
+    chat:'Discussion familiale',message:'Ecrire un message…',send:'Envoyer',
+    photos:'Nos souvenirs',addPhoto:'Ajouter une photo',mood:'Comment ca va ?',moodSaved:'Humeur enregistree',noPhotos:'Ajoutez le premier souvenir de la famille.',online:'en ligne',
+    events:['Cours de maths','Devoir francais','Examen sciences','Natation']
   },
   ar:{
     brand:'عائلة فقيّر',familyOnline:'العائلة متصلة',
@@ -75,12 +75,12 @@ function home(){
   let s=q(),remaining=data.tasks.filter(x=>!x.done).length;
   let greeting=`${s.hello}, ${data.currentUser} !`;
   return header(greeting,s.today)+`<section class="dashboard"><div>
-    <article class="card today"><div class="today-icon">🏡</div><div><h2>${s.welcome}</h2><p class="muted">${s.tasks} · ${remaining} ${data.lang==='fr'?'à faire':'متبقية'}</p></div></article>
+    <article class="card today"><div class="today-icon">🏡</div><div><h2>${s.welcome}</h2><p class="muted">${s.tasks} · ${remaining} ${data.lang==='fr'?'a faire':'متبقية'}</p></div></article>
     <div class="stat-grid"><div class="stat"><strong>${remaining}</strong><span>${s.tasks}</span></div><div class="stat"><strong>🛒</strong><span>Shopping</span></div><div class="stat"><strong>${data.mood}</strong><span>${s.mood}</span></div></div>
     <article class="card" style="margin-top:22px"><div class="card-heading"><h2>${s.tasks}</h2><button class="button secondary" onclick="go('tasks')">${s.addTask}</button></div>${taskList(data.tasks.slice(0,3))}</article>
   </div><div>
     <article class="card"><h2>${s.mood}</h2><div class="mood-row">${moods()}</div></article>
-    <article class="card" style="margin-top:22px"><div class="card-heading"><h2>${s.shopTitle}</h2><button class="button secondary" onclick="go('shop')">🛒</button></div><p class="muted">💡 ${data.shopping.filter(x=>!x.done).length} articles à acheter</p></article>
+    <article class="card" style="margin-top:22px"><div class="card-heading"><h2>${s.shopTitle}</h2><button class="button secondary" onclick="go('shop')">🛒</button></div><p class="muted">💡 ${data.shopping.filter(x=>!x.done).length} articles a acheter</p></article>
     <article class="card" style="margin-top:22px"><h2>${s.chat}</h2><div class="feed">${data.messages.slice(-3).map(m=>`<div class="feed-item"><b>${m.from}</b> ${m.text}<time>${m.time}</time></div>`).join('')}</div></article>
   </div></section>`;
 }
@@ -125,7 +125,7 @@ function shop(){
 
 function kids(){
   let s=q();
-  return header(s.kidsTitle,'Jeux, dessins et défis pour Mariem !')+
+  return header(s.kidsTitle,'Jeux, dessins et defis pour Mariem !')+
   `<div class="two-col">
     <article class="card">
       <h2>${s.drawingBoard}</h2>
@@ -143,7 +143,7 @@ function kids(){
       <h2>${s.kidsChallenges}</h2>
       <p class="muted" style="margin-bottom:14px">Coche tes defis une fois reussis ! 🌟</p>
       <div class="check-list">${data.kidsTasks.map(k=>`<div class="task-row ${k.done?'done':''}"><input type="checkbox" ${k.done?'checked':''} onchange="toggleKidsTask(${k.id})"><label>${k.text}</label></div>`).join('')}</div>
-      ${data.kidsTasks.every(k=>k.done)?'<div style="text-align:center;margin-top:20px;font-size:18px;background:var(--mint);padding:12px;border-radius:12px;color:#236b43">🎉 Bravo Mariem ! Tu as gagné une super surprise ! 👑</div>':''}
+      ${data.kidsTasks.every(k=>k.done)?'<div style="text-align:center;margin-top:20px;font-size:18px;background:var(--mint);padding:12px;border-radius:12px;color:#236b43">🎉 Bravo Mariem ! Tu as gagne une super surprise ! 👑</div>':''}
     </article>
   </div>`;
 }
